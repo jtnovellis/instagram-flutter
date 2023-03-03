@@ -22,6 +22,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final String logoPath = 'assets/ic_instagram.svg';
   Uint8List? image;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -37,6 +38,28 @@ class _SignupScreenState extends State<SignupScreen> {
     setState(() {
       image = newImage;
     });
+  }
+
+  void signupUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    String res = await AuthMethods().signUpUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+      username: _usernameController.text,
+      bio: _bioController.text,
+      file: image!,
+    );
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (res != 'succes') {
+      showSnacBar(res, context);
+    }
   }
 
   @override
@@ -127,16 +150,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 height: 24,
               ),
               InkWell(
-                onTap: () async {
-                  String res = await AuthMethods().signUpUser(
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                    username: _usernameController.text,
-                    bio: _bioController.text,
-                    file: image!,
-                  );
-                  print(res);
-                },
+                onTap: signupUser,
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
@@ -149,7 +163,13 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     color: blueColor,
                   ),
-                  child: const Text('Sign up'),
+                  child: _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: primaryColor,
+                          ),
+                        )
+                      : const Text('Sign up'),
                 ),
               ),
               Flexible(

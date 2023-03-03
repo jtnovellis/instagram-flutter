@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:instagram_flutter/services/auth_methods.dart';
 import 'package:instagram_flutter/utils/colors.dart';
+import 'package:instagram_flutter/utils/utils.dart';
 import 'package:instagram_flutter/widgets/text_field_input.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,6 +22,20 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+  }
+
+  void login() async {
+    String res = await AuthMethods().loginUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+
+    if (res == 'success') {
+      // something
+    } else {
+      // something
+      showSnacBar(res, context);
+    }
   }
 
   @override
@@ -91,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: const Text('Don\'t have an account?'),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: login,
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: const Text(
