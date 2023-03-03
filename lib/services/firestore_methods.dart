@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:instagram_flutter/models/post.dart';
 import 'package:instagram_flutter/services/storage_methods.dart';
