@@ -13,7 +13,7 @@ class LikeAnimation extends StatefulWidget {
     required this.isAnimation,
     this.duration = const Duration(microseconds: 150),
     this.onEnd,
-    required this.smallLike,
+    this.smallLike = false,
   });
 
   @override
@@ -41,7 +41,9 @@ class _LikeAnimationState extends State<LikeAnimation>
   void didUpdateWidget(covariant LikeAnimation oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (widget.isAnimation != oldWidget.isAnimation) {}
+    if (widget.isAnimation != oldWidget.isAnimation) {
+      startAnimation();
+    }
   }
 
   startAnimation() async {
