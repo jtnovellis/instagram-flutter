@@ -24,6 +24,7 @@ class AuthMethods {
           email: email,
           password: password,
         );
+
         String photoUrl = await StorageMethods().uploadImageToStorage(
           'profilePics',
           file,
@@ -31,14 +32,15 @@ class AuthMethods {
         );
 
         await _firestore.collection('users').doc(cred.user!.uid).set({
+          'username': username,
           'uid': cred.user!.uid,
           'email': email,
-          'username': username,
           'bio': bio,
           'followers': [],
           'following': [],
           'photoUrl': photoUrl,
         });
+
         res = 'success';
       }
     } catch (e) {
