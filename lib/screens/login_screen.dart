@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 isPass: true,
               ),
               const SizedBox(
-                height: 12,
+                height: 24,
               ),
               Container(
                 width: double.infinity,
